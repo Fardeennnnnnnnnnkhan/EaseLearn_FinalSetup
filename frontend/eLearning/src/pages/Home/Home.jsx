@@ -5,6 +5,8 @@ import AvailableCourses from "../AvailableCourses.jsx";
 import Instructors from "../Instructors.jsx";
 import FAQ from "../FAQ.jsx";
 import { useNavigate } from "react-router-dom";
+import Testimonials from "../../components/Testimonials/Testimonial.jsx";
+import Blogs from "../../components/Blog.jsx";
 
 function Home() {
   const navigate = useNavigate();
@@ -72,6 +74,12 @@ function Home() {
       {/* Instructors Section */}
       <div className="w-full bg-black ">
         <Instructors />
+      </div>
+      <div className="w-full bg-black ">
+        <Testimonials/>
+      </div>
+      <div className="w-full bg-black ">
+        <Blogs/>
       </div>
 
       {/* FAQ Section */}

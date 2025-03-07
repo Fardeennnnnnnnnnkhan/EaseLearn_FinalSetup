@@ -30,7 +30,7 @@ function CourseDescription({user}) {
     <div className="w-full md:w-1/2 md:ml-8 bg-[#171717] p-6 rounded-lg shadow-lg">
       <h1 className="text-4xl font-bold mb-4 text-white">{course.title}</h1>
       <p className="text-lg mb-2 text-gray-300">Instructor: {course.createdBy}</p>
-      <p className="text-lg mb-2 text-gray-300">Duration: {course.duration}</p>
+      <p className="text-lg mb-2 text-gray-300">Duration: {course.duration} Weeks</p>
       
       {/* Ratings and Reviews */}
       <div className="mb-4">

@@ -78,21 +78,21 @@ function CourseCard({ course }) {
       </div>
 
       {/* Course Details - Fixed height with ellipsis for overflow */}
-      <h3 className="text-lg font-bold mt-3 line-clamp-2 h-14">{course.title}</h3>
+      <h3 className="text-lg font-bold  line-clamp-2 h-14">{course.title}</h3>
 
       {/* Badges */}
-      {/* <div className="flex space-x-2 mt-2">
-        <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-md">LIVE BATCH</span>
-        <span className="bg-gray-700 text-white text-xs font-bold px-2 py-1 rounded-md">HINDI</span>
-      </div> */}
+      {/* <div className="flex space-x-2 mt-2"> */}
+        {/* <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-md">LIVE BATCH</span> */}
+        {/* <span className="bg-gray-700 text-white text-xs font-bold px-2 py-1 rounded-md">HINDI</span> */}
+      {/* </div> */}
 
       {/* Pricing */}
       <div className="mt-3">
         <p className="text-green-400 text-sm font-semibold">Limited Time Discount</p>
         <div className="flex items-center space-x-2">
           <span className="text-xl font-bold">₹ {course.price}</span>
-          <span className="line-through text-gray-400">₹ {course.originalPrice}</span>
-          <span className="bg-white text-black text-xs font-bold px-2 py-1 rounded-md">{course.discount}% OFF</span>
+          <span className="line-through text-gray-400"> {course.originalPrice}</span>
+          <span className="bg-white text-black text-xs font-bold px-2 py-1 rounded-md">{course.discount}15% OFF</span>
         </div>
       </div>
 
