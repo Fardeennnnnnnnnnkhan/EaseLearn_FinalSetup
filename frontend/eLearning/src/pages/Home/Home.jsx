@@ -42,8 +42,9 @@ function Home() {
             Get ready to <span className="text-teal-400">accelerate your career</span> with customized courses and leave your mark in the tech industry.
           </motion.p>
           <motion.button
+          onClick={() => navigate('/courses')} 
           
-            whileHover={{ scale: 0.4 }}
+            whileHover={{ scale: 1.1 }}
             className="mt-8 bg-teal-400 text-black font-bold py-3 px-6 rounded-full shadow-md hover:bg-teal-300 transition"
           >
             Check Courses - Make an Impact

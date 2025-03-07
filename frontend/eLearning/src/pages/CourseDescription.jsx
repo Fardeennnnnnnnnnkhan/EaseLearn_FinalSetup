@@ -16,7 +16,7 @@ function CourseDescription({user}) {
 
     <>
 {course && (
-  <div className="min-h-screen mt-20 pt-9 bg-black text-gray-200 flex flex-col md:flex-row items-center md:items-start py-4 md:p-10">
+  <div className="min-h-screen  pt-9 bg-black text-gray-200 flex flex-col md:flex-row items-center md:items-start py-4 md:p-10">
     {/* Course Image */}
     <div className="w-full  object-cover md:w-1/2 flex justify-center mb-6 md:mb-0">
       <img

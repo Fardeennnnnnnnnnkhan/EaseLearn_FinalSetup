@@ -116,7 +116,7 @@ const deleteHandler = async  (id)=>{
 };
 
   return (
-    <div className="bg-black bg-gradient-to-b from-teal-900/40 to-black min-h-screen py-20">
+    <div className="bg-black bg-gradient-to-b from-teal-900/40 to-black min-h-screen ">
     {loading ? (
       <Loading />
     ) : (
