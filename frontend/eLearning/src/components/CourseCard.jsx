@@ -81,10 +81,10 @@ function CourseCard({ course }) {
       <h3 className="text-lg font-bold mt-3 line-clamp-2 h-14">{course.title}</h3>
 
       {/* Badges */}
-      <div className="flex space-x-2 mt-2">
+      {/* <div className="flex space-x-2 mt-2">
         <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-md">LIVE BATCH</span>
         <span className="bg-gray-700 text-white text-xs font-bold px-2 py-1 rounded-md">HINDI</span>
-      </div>
+      </div> */}
 
       {/* Pricing */}
       <div className="mt-3">
