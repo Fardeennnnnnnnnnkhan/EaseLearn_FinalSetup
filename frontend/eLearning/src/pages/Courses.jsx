@@ -81,7 +81,7 @@ function Courses() {
           <div className="text-center mt-6">
             <button
               onClick={handleShowMore}
-              className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition duration-300 shadow-lg"
+              className="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition duration-300 shadow-lg"
             >
               Show More
             </button>

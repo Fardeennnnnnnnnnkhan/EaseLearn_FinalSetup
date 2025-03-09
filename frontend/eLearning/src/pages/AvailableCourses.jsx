@@ -45,7 +45,7 @@ function AvailableCourses() {
     >
       Top Courses
     </motion.h1>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {courses.length > 0 ? (
         courses.map((course) => <CourseCard key={course._id} course={course} />)
       ) : (
