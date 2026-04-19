@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server/index.js",
     "build" : "npm install && npm install --prefix frontend/eLearning && npm run build --prefix frontend/eLearning",
-    "start":"nodemon server/index.js"
+    "start":"node server/index.js"
   },
   "keywords": [],
   "author": "",
