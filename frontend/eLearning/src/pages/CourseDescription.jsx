@@ -2,85 +2,120 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CourseData } from '../context/CourseContext';
 import { server } from '../main';
+import { Skeleton } from '../components/Skeleton';
+
 function CourseDescription({user}) {
     const navigate = useNavigate()
     const params = useParams();
-    const {fetchCourse ,course , fetchMyCourse} = CourseData()
-  const [loading , setLoading ] = useState(false)
-    useEffect(()=>{
-        fetchCourse(params.id)
-    } , [])
-
-  return (
+    const {fetchCourse, course} = CourseData()
+    const [loading, setLoading] = useState(true)
     
+    useEffect(()=>{
+        const loadData = async () => {
+          setLoading(true);
+          await fetchCourse(params.id);
+          setLoading(false);
+        };
+        loadData();
+    }, [params.id])
 
-    <>
-{course && (
-  <div className="min-h-screen  pt-9 bg-black text-gray-200 flex flex-col md:flex-row items-center md:items-start py-4 md:p-10">
-    {/* Course Image */}
-    <div className="w-full  object-cover md:w-1/2 flex justify-center mb-6 md:mb-0">
-      <img
-        src={`${server}/${course.image}`}
-        alt=""
-        className="w-full md:w-3/4 object-cover rounded-lg shadow-lg"
-      />
-    </div>
-
-    {/* Course Details */}
-    <div className="w-full md:w-1/2 md:ml-8 bg-[#171717] p-6 rounded-lg shadow-lg">
-      <h1 className="text-4xl font-bold mb-4 text-white">{course.title}</h1>
-      <p className="text-lg mb-2 text-gray-300">Instructor: {course.createdBy}</p>
-      <p className="text-lg mb-2 text-gray-300">Duration: {course.duration} Weeks</p>
-      
-      {/* Ratings and Reviews */}
-      <div className="mb-4">
-        <p className="text-lg mb-2 text-gray-300">Ratings and Reviews:</p>
-        <div className="flex items-center">
-          {[...Array(3)].map((star, index) => (
-            <svg
-              key={index}
-              className={`w-6 h-6 fill-current ${
-                index < course.rating ? 'text-yellow-400' : 'text-yellow-600'
-              }`}
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 .587l3.668 7.568L24 9.747l-6 5.853 1.413 8.23L12 18.896l-7.413 4.934L6 15.6 0 9.747l8.332-1.592L12 .587z" />
-            </svg>
-          ))}
-          <span className="ml-2 text-gray-300">{course.rating}</span>
+  if (loading || !course) {
+    return (
+      <div className="min-h-screen pt-28 bg-background px-4 md:px-8 pb-10">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+          <div className="w-full md:w-1/2 flex justify-center">
+            <Skeleton className="w-full h-[300px] md:h-[400px] rounded-3xl" />
+          </div>
+          <div className="w-full md:w-1/2 bg-card p-8 md:p-10 rounded-3xl shadow-md border border-border flex flex-col gap-4">
+            <Skeleton className="w-3/4 h-10" />
+            <Skeleton className="w-1/2 h-6" />
+            <Skeleton className="w-1/3 h-6" />
+            <Skeleton className="w-full h-32 mt-4" />
+            <div className="mt-auto pt-6 border-t border-border flex justify-between items-center">
+              <Skeleton className="w-20 h-8" />
+              <Skeleton className="w-1/2 h-14 rounded-xl" />
+            </div>
+          </div>
         </div>
       </div>
+    );
+  }
 
-      {/* Course Long Description */}
-      <p className="text-lg mb-4 text-gray-300">
-        {course.description}
-      </p>
+  return (
+    <>
+      <div className="min-h-screen pt-28 bg-background px-4 md:px-8 pb-10">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+          {/* Course Image */}
+          <div className="w-full md:w-1/2 flex justify-center">
+            <img
+              src={`${server}/${course.image}`}
+              alt={course.title}
+              className="w-full object-cover rounded-3xl shadow-xl border border-border"
+            />
+          </div>
 
-      {/* Price and Buy/Study Button */}
-      <p className="text-2xl font-semibold mb-4 text-white">
-        Buy This Course Only At ₹{course.price}
-      </p>
-      {user && user.subscription.includes(course._id) ? (
-        <button
-          onClick={() => navigate('/course/study/:id')}
-          className="mt-4 w-full bg-green-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Study
-        </button>
-      ) : (
-        <button
-          onClick={() => navigate(`/course/study/${course._id}`)}
-          className="mt-4 w-full bg-green-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Buy Now
-        </button>
-      )}
-    </div>
-  </div>
-)}
+          {/* Course Details */}
+          <div className="w-full md:w-1/2 bg-card p-8 md:p-10 rounded-3xl shadow-md border border-border flex flex-col">
+            <div className="flex-1">
+              <h1 className="text-4xl font-light mb-4 text-foreground leading-tight">{course.title}</h1>
+              <p className="text-lg mb-2 text-muted-foreground font-light">Instructor: <span className="text-foreground">{course.createdBy}</span></p>
+              <p className="text-lg mb-6 text-muted-foreground font-light">Duration: <span className="text-foreground">{course.duration} Weeks</span></p>
+              
+              {/* Ratings and Reviews */}
+              <div className="mb-8">
+                <p className="text-lg mb-2 text-foreground font-light">Ratings and Reviews:</p>
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((star, index) => (
+                    <svg
+                      key={index}
+                      className={`w-6 h-6 fill-current ${
+                        index < (course.rating || 3) ? 'text-yellow-400' : 'text-muted'
+                      }`}
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 .587l3.668 7.568L24 9.747l-6 5.853 1.413 8.23L12 18.896l-7.413 4.934L6 15.6 0 9.747l8.332-1.592L12 .587z" />
+                    </svg>
+                  ))}
+                  <span className="ml-3 text-muted-foreground font-light">{course.rating || 3}.0</span>
+                </div>
+              </div>
 
-  </>
-  
+              {/* Course Long Description */}
+              <div className="mb-8">
+                <h3 className="text-xl font-light text-foreground mb-3">About This Course</h3>
+                <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                  {course.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Price and Action Section */}
+            <div className="pt-6 border-t border-border mt-auto">
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-muted-foreground text-lg">Price</span>
+                <span className="text-3xl font-light text-foreground">₹{course.price}</span>
+              </div>
+              
+              {user && user.subscription && user.subscription.includes(course._id) ? (
+                <button
+                  onClick={() => navigate(`/course/study/${course._id}`)}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-light py-4 px-6 rounded-xl transition-colors shadow-md text-lg"
+                >
+                  Start Studying
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate(`/course/study/${course._id}`)}
+                  className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-light py-4 px-6 rounded-xl transition-colors shadow-md text-lg"
+                >
+                  Enroll Now
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 

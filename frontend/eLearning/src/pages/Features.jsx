@@ -23,7 +23,7 @@ const Features = () => {
   return (
 <section className="w-full p-8 ">
   <div className="text-center mb-8">
-    <h2 className="text-3xl font-bold text-black">Key Features</h2>
+    <h2 className="text-3xl font-light text-foreground">Key Features</h2>
     <p className="text-gray-600 mt-2">Unlock the full potential of learning with EaseLearn</p>
   </div>
 
@@ -31,12 +31,12 @@ const Features = () => {
     {features.map((feature, index) => (
       <motion.div
         key={index}
-        className="w-full md:w-1/3 p-6 m-2 bg-white shadow-lg rounded-lg flex flex-col justify-center items-center text-center transform transition-all duration-300 hover:scale-110 hover:shadow-xl"
+        className="w-full md:w-1/3 p-6 m-2 bg-background shadow-lg rounded-lg flex flex-col justify-center items-center text-center transform transition-all duration-300 hover:scale-110 hover:shadow-xl"
         whileHover={{ scale: 1.1 }}
         transition={{ type: 'spring', stiffness: 150 }}
       >
         <div className="text-6xl mb-4 text-[#4660EC]">{feature.icon}</div>
-        <h3 className="text-xl font-semibold text-gray-800">{feature.title}</h3>
+        <h3 className="text-xl font-light text-gray-800">{feature.title}</h3>
         <p className="text-gray-600 mt-2">{feature.description}</p>
       </motion.div>
     ))}

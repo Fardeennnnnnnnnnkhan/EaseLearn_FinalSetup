@@ -62,42 +62,64 @@ function AdminUser({ user }) {
 
   return (
     <Layout>
-      <div className="container mx-auto p-4  py-28">
-        <h1 className="text-2xl font-bold mb-4 text-center">All Users</h1>
+      <div className="container mx-auto p-4 py-8 md:py-16">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-light text-foreground">User Management</h1>
+          <span className="bg-primary/10 text-primary font-light px-4 py-1.5 rounded-full">
+            {users.length} Total Users
+          </span>
+        </div>
 
         {/* Scrollable Table Wrapper */}
-        <div className="overflow-x-auto">
-          <div className="overflow-y-auto max-h-[60vh]">
-            <table className="min-w-full bg-white border border-gray-300 shadow-md">
-              <thead className="sticky top-0 bg-gray-100 border-b">
-                <tr>
-                  <th className="px-4 py-2 text-left">#</th>
-                  <th className="px-4 py-2 text-left">Name</th>
-                  <th className="px-4 py-2 text-left">Email</th>
-                  <th className="px-4 py-2 text-left">Role</th>
-                  <th className="px-4 py-2 text-left">Update Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users &&
-                  users.map((e, i) => (
-                    <tr key={e._id} className="border-b">
-                      <td className="px-4 py-2">{i + 1}</td>
-                      <td className="px-4 py-2">{e.name}</td>
-                      <td className="px-4 py-2">{e.email}</td>
-                      <td className="px-4 py-2">{e.role}</td>
-                      <td className="px-4 py-2">
-                        <button
-                          onClick={() => updateRole(e._id)}
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                        >
-                          Update Role
-                        </button>
+        <div className="bg-card border border-border shadow-sm rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <div className="overflow-y-auto max-h-[60vh] custom-scrollbar">
+              <table className="min-w-full text-left border-collapse">
+                <thead className="sticky top-0 bg-muted border-b border-border z-10">
+                  <tr>
+                    <th className="px-6 py-4 font-light text-muted-foreground text-sm uppercase tracking-wider">#</th>
+                    <th className="px-6 py-4 font-light text-muted-foreground text-sm uppercase tracking-wider">Name</th>
+                    <th className="px-6 py-4 font-light text-muted-foreground text-sm uppercase tracking-wider">Email</th>
+                    <th className="px-6 py-4 font-light text-muted-foreground text-sm uppercase tracking-wider">Role</th>
+                    <th className="px-6 py-4 font-light text-muted-foreground text-sm uppercase tracking-wider text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {users && users.length > 0 ? (
+                    users.map((e, i) => (
+                      <tr key={e._id} className="hover:bg-muted/50 transition-colors">
+                        <td className="px-6 py-4 text-muted-foreground">{i + 1}</td>
+                        <td className="px-6 py-4 font-light text-foreground">{e.name}</td>
+                        <td className="px-6 py-4 text-muted-foreground">{e.email}</td>
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-light ${
+                            e.role === 'admin' 
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' 
+                              : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                          }`}>
+                            {e.role}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          <button
+                            onClick={() => updateRole(e._id)}
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-light py-1.5 px-4 rounded-lg shadow-sm transition-all text-sm"
+                          >
+                            Toggle Role
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="px-6 py-8 text-center text-muted-foreground">
+                        No users found
                       </td>
                     </tr>
-                  ))}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

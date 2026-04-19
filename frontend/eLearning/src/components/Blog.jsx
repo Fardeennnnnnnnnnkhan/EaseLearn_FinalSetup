@@ -20,8 +20,8 @@ const blogs = [
 
 const Blogs = () => {
   return (
-    <div className="w-full py-16 bg-gradient-to-t from-teal-900/40 to-black bg-black text-white flex flex-col items-center">
-      <h2 className="text-4xl font-semibold text-teal-400 mb-8">Latest Blogs & Resources</h2>
+    <div className="w-full py-16 bg-gradient-to-t from-teal-900/40 to-black bg-black text-foreground flex flex-col items-center">
+      <h2 className="text-4xl font-light text-teal-400 mb-8">Latest Blogs & Resources</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl px-4">
         {blogs.map((blog, index) => (
           <motion.div
@@ -36,7 +36,7 @@ const Blogs = () => {
               alt={blog.title}
               className="w-full h-40 object-contain rounded-md mb-4"
             />
-            <h3 className="text-lg font-bold text-teal-400">{blog.title}</h3>
+            <h3 className="text-lg font-light text-teal-400">{blog.title}</h3>
             <p className="text-gray-300">{blog.description}</p>
           </motion.div>
         ))}

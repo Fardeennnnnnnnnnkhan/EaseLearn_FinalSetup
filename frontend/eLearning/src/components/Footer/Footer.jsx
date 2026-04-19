@@ -3,77 +3,82 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/f
 
 function Footer() {
   return (
-    <footer className="bg-black text-white ">
-      <div className="container bg-gradient-to-t py-12 from-teal-900/40 mx-auto px-4">
-        <div className="flex flex-wrap justify-between">
+    <footer className="bg-background text-foreground border-t border-border mt-auto">
+      <div className="container mx-auto py-16 px-6">
+        <div className="flex flex-wrap justify-between gap-10 md:gap-0">
           {/* About Section */}
-          <div className="w-full sm:w-1/2 md:w-1/4 mb-8 sm:mb-0">
-            <h2 className="text-xl font-bold mb-4">EaseLearn</h2>
-            <p className="text-sm text-gray-400">
+          <div className="w-full sm:w-1/2 md:w-1/4">
+            <h2 className="text-2xl font-light tracking-tight mb-4">
+              Ease<span className="text-primary">Learn</span>
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed pr-4">
               EaseLearn is your go-to platform for quality learning. Whether you want to upskill or explore new knowledge areas, we've got you covered.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="w-full sm:w-1/2 md:w-1/4 mb-8 sm:mb-0">
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul>
-              <li className="mb-2">
-                <a href="/courses" className="hover:text-green-500">Courses</a>
-              </li>
-              <li className="mb-2">
-                <a href="/about" className="hover:text-green-500">About Us</a>
-              </li>
-              <li className="mb-2">
-                <a href="/blog" className="hover:text-green-500">Blog</a>
+          <div className="w-full sm:w-1/2 md:w-1/4">
+            <h3 className="text-lg font-light mb-4 text-foreground">Quick Links</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="/courses" className="text-muted-foreground hover:text-primary transition-colors text-sm">Courses</a>
               </li>
               <li>
-                <a href="/contact" className="hover:text-green-500">Contact Us</a>
+                <a href="/about" className="text-muted-foreground hover:text-primary transition-colors text-sm">About Us</a>
+              </li>
+              <li>
+                <a href="/blog" className="text-muted-foreground hover:text-primary transition-colors text-sm">Blog</a>
+              </li>
+              <li>
+                <a href="/contact" className="text-muted-foreground hover:text-primary transition-colors text-sm">Contact Us</a>
               </li>
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div className="w-full sm:w-1/2 md:w-1/4 mb-8 sm:mb-0">
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <p className="text-sm text-gray-400 mb-2">
-              Email: support@easelearn.com
-            </p>
-            <p className="text-sm text-gray-400 mb-2">
-              Phone: +123 456 7890
-            </p>
-            <p className="text-sm text-gray-400">
-              Address: 123 Learning St, Knowledge City, EduLand
-            </p>
+          <div className="w-full sm:w-1/2 md:w-1/4">
+            <h3 className="text-lg font-light mb-4 text-foreground">Contact Us</h3>
+            <ul className="space-y-3">
+              <li className="text-sm text-muted-foreground">
+                <span className="font-light text-foreground mr-2">Email:</span>support@easelearn.com
+              </li>
+              <li className="text-sm text-muted-foreground">
+                <span className="font-light text-foreground mr-2">Phone:</span>+123 456 7890
+              </li>
+              <li className="text-sm text-muted-foreground leading-relaxed">
+                <span className="font-light text-foreground mr-2 block mb-1">Address:</span>
+                123 Learning St, Knowledge City, EduLand
+              </li>
+            </ul>
           </div>
 
           {/* Social Media */}
           <div className="w-full sm:w-1/2 md:w-1/4">
-            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+            <h3 className="text-lg font-light mb-4 text-foreground">Follow Us</h3>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                <FaFacebookF size={20} />
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                <FaFacebookF size={18} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                <FaTwitter size={20} />
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                <FaTwitter size={18} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                <FaInstagram size={20} />
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                <FaInstagram size={18} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                <FaLinkedinIn size={20} />
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                <FaLinkedinIn size={18} />
               </a>
             </div>
           </div>
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-12 text-center">
-          <p className="text-sm text-gray-500">
+        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} EaseLearn. All rights reserved.
           </p>
-          <p className="text-sm text-gray-500 mt-2">
-            Designed and developed by Fardeen Khan
+          <p className="text-sm text-muted-foreground">
+            Designed and developed by <span className="text-foreground font-light">Fardeen Khan</span>
           </p>
         </div>
       </div>

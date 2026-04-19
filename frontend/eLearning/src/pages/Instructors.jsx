@@ -48,7 +48,7 @@ const Instructors = () => {
   return (
 <section className="w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-t from-teal-900/40 to-black px-6 py-12">
     {/* Heading */}
-    <h2 className="text-5xl font-extrabold text-white mb-12 drop-shadow-lg">
+    <h2 className="text-5xl font-light text-foreground mb-12 drop-shadow-lg">
       Our Instructors
     </h2>
 
@@ -75,21 +75,21 @@ const Instructors = () => {
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <h3 className="text-4xl font-bold text-white">
+        <h3 className="text-4xl font-light text-foreground">
           {instructors[currentIndex].name}
         </h3>
-        <p className="text-lg text-blue-400 font-medium">
+        <p className="text-lg text-blue-400 font-light">
           {instructors[currentIndex].expertise}
         </p>
         <p className="text-gray-300 leading-relaxed">{instructors[currentIndex].description}</p>
         <p className="text-gray-300">
-          <span className="font-semibold text-blue-400">Qualifications:</span> {instructors[currentIndex].qualifications}
+          <span className="font-light text-blue-400">Qualifications:</span> {instructors[currentIndex].qualifications}
         </p>
         <p className="text-gray-300">
-          <span className="font-semibold text-blue-400">Experience:</span> {instructors[currentIndex].experience} years
+          <span className="font-light text-blue-400">Experience:</span> {instructors[currentIndex].experience} years
         </p>
         <p className="text-gray-300">
-          <span className="font-semibold text-blue-400">Fields:</span> {instructors[currentIndex].fields.join(", ")}
+          <span className="font-light text-blue-400">Fields:</span> {instructors[currentIndex].fields.join(", ")}
         </p>
         <p className="text-gray-400 italic">{instructors[currentIndex].bio}</p>
       </motion.div>

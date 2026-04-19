@@ -1,50 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaBook, FaUsers, FaSignOutAlt } from 'react-icons/fa';
 
 function Sidebar() {
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
+
+  const links = [
+    { name: 'Home', path: '/admin/dashboard', icon: <FaHome /> },
+    { name: 'Courses', path: '/admin/course', icon: <FaBook /> },
+    { name: 'Users', path: '/admin/users', icon: <FaUsers /> },
+    { name: 'Logout', path: '/Account', icon: <FaSignOutAlt /> },
+  ];
+
   return (
-    <div className='h-full w-[15vw] bg-blue-400  py-24 flex flex-col items-center'>
-      <ul className='w-full'>
-        {/* Home */}
-        <li className='flex items-center justify-center md:justify-start border-b-[1px] border-white py-4 hover:bg-gray-100'>
-          <Link to="/admin/dashboard" className='flex items-center px-4'>
-            <div className='bg-white p-2 rounded-full'>
-              <FaHome className="text-black text-xl" />
-            </div>
-            <span className='hidden md:inline-block ml-4 text-black'>Home</span>
-          </Link>
-        </li>
-
-        {/* Courses */}
-        <li className='flex items-center justify-center md:justify-start py-4 border-b-[1px] border-white hover:bg-gray-100'>
-          <Link to="/admin/course" className='flex items-center px-4'>
-            <div className='bg-white p-2 rounded-full'>
-              <FaBook className="text-black text-xl" />
-            </div>
-            <span className='hidden md:inline-block ml-4 text-black'>Courses</span>
-          </Link>
-        </li>
-
-        {/* Users */}
-        <li className='flex items-center justify-center md:justify-start py-4 border-b-[1px] border-white hover:bg-gray-100'>
-          <Link to="/admin/users" className='flex items-center px-4'>
-            <div className='bg-white p-2 rounded-full'>
-              <FaUsers className="text-black text-xl" />
-            </div>
-            <span className='hidden md:inline-block ml-4 text-black'>Users</span>
-          </Link>
-        </li>
-
-        {/* Logout */}
-        <li className='flex items-center justify-center md:justify-start py-4 border-b-[1px] border-white hover:bg-gray-100'>
-          <Link to="/Account" className='flex items-center px-4'>
-            <div className='bg-white p-2 rounded-full'>
-              <FaSignOutAlt className="text-black text-xl" />
-            </div>
-            <span className='hidden md:inline-block ml-4 text-black'>Logout</span>
-          </Link>
-        </li>
+    <div className='h-full w-20 md:w-64 bg-card border-r border-border py-28 flex flex-col items-center md:items-stretch transition-all'>
+      <ul className='w-full space-y-2 px-2'>
+        {links.map((link) => (
+          <li key={link.name}>
+            <Link 
+              to={link.path} 
+              className={`flex items-center justify-center md:justify-start px-4 py-3 rounded-xl transition-all ${
+                isActive(link.path) 
+                  ? 'bg-primary text-primary-foreground shadow-md' 
+                  : 'hover:bg-muted text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <div className={`text-xl ${isActive(link.path) ? 'text-primary-foreground' : 'text-primary'}`}>
+                {link.icon}
+              </div>
+              <span className='hidden md:inline-block ml-4 font-light'>{link.name}</span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

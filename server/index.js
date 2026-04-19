@@ -73,9 +73,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
+connectDb(); 
 // Start server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`App listening on http://localhost:${port}`);
-  connectDb(); 
 });

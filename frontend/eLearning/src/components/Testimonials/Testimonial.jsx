@@ -29,13 +29,13 @@ const Testimonials = () => {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       viewport={{ once: true }}
-      className="w-full bg-gradient-to-b from-teal-900/40 to-black py-16 text-white flex flex-col items-center"
+      className="w-full bg-gradient-to-b from-teal-900/40 to-black py-16 text-foreground flex flex-col items-center"
     >
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="text-4xl font-semibold text-teal-400 mb-8"
+        className="text-4xl font-light text-teal-400 mb-8"
       >
         What Our Students Say
       </motion.h2>
@@ -59,7 +59,7 @@ const Testimonials = () => {
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.8, delay: index * 0.5 }}
             />
-            <h3 className="text-lg font-bold text-teal-400">{testimonial.name}</h3>
+            <h3 className="text-lg font-light text-teal-400">{testimonial.name}</h3>
             <p className="text-gray-300 italic">"{testimonial.review}"</p>
             <div className="flex justify-center mt-2">
               {[...Array(5)].map((_, i) => (

@@ -1,200 +1,189 @@
 import React, { useState, useEffect } from "react";
-// import './Header.css';
-import { NavLink } from 'react-router-dom';
-import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
-import {motion} from 'framer-motion'
-function Header({ isAuth }) {
-  const [Isopen, setIsopen] = useState(false);
+import { NavLink, useLocation } from 'react-router-dom';
+import { RiMenu3Fill, RiCloseFill, RiMoonFill, RiSunFill } from "react-icons/ri";
+import { motion, AnimatePresence } from 'framer-motion';
 
-  const toggleMenu = () => {
-    setIsopen(!Isopen);
-    document.body.style.overflow = Isopen ? "auto" : "hidden"; // Disable scrolling when navbar is open
+function Header({ isAuth }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  useEffect(() => {
+    // Check initial preferences
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+      setIsDarkMode(true);
+    }
   };
 
-  return (
-    <div className="w-full flex justify-between items-center px-10 bg-black py-6 bg-gradient-to- from-teal-900/40  to-black text-white ">
-      <div className="right flex">
-        <h1 className="text-4xl font-semibold ">
-          Ease<span className="text-teal-400">Learn</span>
-        </h1>
-      </div>
-      <div className="left hidden sm:block text-lg tracking-tighter">
-        <div className="links flex gap-6">
-          <NavLink
-            className="text-xl  font-medium transition-colors hover:underline duration-200 hover:text-teal-400"
-            to="/"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            className="text-xl font-medium transition-colors hover:underline duration-200 hover:text-teal-400"
-            to="/courses"
-          >
-            Courses
-          </NavLink>
-          <NavLink
-            className="text-xl font-medium transition-colors hover:underline duration-200 hover:text-teal-400"
-            to="/about"
-          >
-            About
-          </NavLink>
-          {isAuth ? (
-            <NavLink
-              className="text-xl font-medium transition-colors hover:underline duration-200 hover:text-teal-400"
-              to="/account"
-            >
-              Account
-            </NavLink>
-          ) : (
-            <NavLink
-              className="text-xl font-medium transition-colors hover:underline duration-200 hover:text-teal-400"
-              to="/login"
-            >
-              Login
-            </NavLink>
-          )}
-        </div>
-      </div>
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    document.body.style.overflow = !isOpen ? "hidden" : "auto";
+  };
 
-      {/* Mobile Navbar */}
-      {Isopen ? (
-        <>
-          <RiCloseFill
-            onClick={toggleMenu}
-            className="text-3xl text-white cursor-pointer z-50 fixed top-6 right-6"
-          />
-          <motion.div
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed top-0 left-0 h-screen w-[100vw] sm:w-[50vw] bg-black opacity-80  bg-gradient-to- from-teal-900/40  to-black z-40 flex flex-col justify-center items-start p-8"
+  useEffect(() => {
+    setIsOpen(false);
+    document.body.style.overflow = "auto";
+  }, [location.pathname]);
+
+  const navLinks = [
+    { name: "Explore", path: "/courses" },
+    { name: "About", path: "/about" },
+  ];
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 border-b ${scrolled ? 'bg-background/80 backdrop-blur-lg border-border py-3 shadow-md' : 'bg-transparent border-transparent py-5'}`}>
+      <div className="container mx-auto flex items-center justify-between px-6 md:px-10">
+        
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center space-x-2 group">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transform transition-transform group-hover:scale-105 shadow-md">
+            <span className="text-primary-foreground font-light text-xl leading-none">E</span>
+          </div>
+          <span className="text-2xl font-light tracking-tight text-foreground transition-colors group-hover:text-primary">
+            EaseLearn
+          </span>
+        </NavLink>
+
+        <div className="flex items-center gap-2 sm:gap-6">
+          {/* Desktop Nav */}
+          <nav className="hidden sm:flex items-center gap-8 mr-4">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                className={({ isActive }) =>
+                  `text-sm font-light transition-all hover:text-primary relative group ${
+                    isActive ? "text-primary" : "text-muted-foreground"
+                  }`
+                }
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Theme Toggle */}
+          <button 
+            onClick={toggleTheme} 
+            className="p-2 mr-1 sm:mr-0 text-muted-foreground hover:text-primary transition-colors focus:outline-none rounded-full hover:bg-muted"
+            aria-label="Toggle Dark Mode"
           >
-            <h2 className="text-3xl text-white font-semibold mb-8">
-              Ease<span className="text-teal-400">Learn</span>
-            </h2>
-            <NavLink
-              className="text-2xl font-medium text-white mb-6 transition-colors duration-200 hover:text-teal-400"
-              to="/"
-              onClick={toggleMenu}
+            {isDarkMode ? <RiSunFill className="h-5 w-5" /> : <RiMoonFill className="h-5 w-5" />}
+          </button>
+
+          {/* User / Login Actions Desktop */}
+          <div className="hidden sm:flex items-center gap-3">
+             {isAuth ? (
+               <NavLink to="/account" className="px-5 py-2 text-sm font-light bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-all shadow-sm">
+                 Dashboard
+               </NavLink>
+             ) : (
+               <>
+                 <NavLink to="/login" className="px-5 py-2 text-sm font-light text-foreground hover:text-primary transition-all">
+                   Log in
+                 </NavLink>
+                 <NavLink to="/register" className="px-5 py-2 text-sm font-light bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                   Sign up
+                 </NavLink>
+               </>
+             )}
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            className="sm:hidden p-2 text-foreground hover:text-primary transition-colors focus:outline-none bg-muted/50 rounded-lg"
+            onClick={toggleMenu}
+          >
+            {isOpen ? <RiCloseFill className="h-6 w-6" /> : <RiMenu3Fill className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Nav Overlay */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "100vh", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute top-full left-0 w-full bg-background/95 backdrop-blur-xl sm:hidden border-b border-border overflow-hidden"
             >
-              Home
-            </NavLink>
-            <NavLink
-              className="text-2xl font-medium text-white mb-6 transition-colors duration-200 hover:text-teal-400"
-              to="/courses"
-              onClick={toggleMenu}
-            >
-              Courses
-            </NavLink>
-            <NavLink
-              className="text-2xl font-medium text-white mb-6 transition-colors duration-200 hover:text-teal-400"
-              to="/about"
-              onClick={toggleMenu}
-            >
-              About
-            </NavLink>
-            {isAuth ? (
-              <NavLink
-                className="text-2xl font-medium text-white mb-6 transition-colors duration-200 hover:text-teal-400"
-                to="/account"
-                onClick={toggleMenu}
-              >
-                Account
-              </NavLink>
-            ) : (
-              <NavLink
-                className="text-2xl font-medium text-white mb-6 transition-colors duration-200 hover:text-teal-400"
-                to="/login"
-                onClick={toggleMenu}
-              >
-                Login
-              </NavLink>
-            )}
-          </motion.div>
-        </>
-      ) : (
-        <RiMenu3Fill
-          onClick={toggleMenu}
-          className="text-3xl text-white sm:hidden cursor-pointer z-50"
-        />
-      )}
-    </div>
+              <div className="flex flex-col px-6 py-8 space-y-6">
+                {navLinks.map((link, i) => (
+                  <motion.div 
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.1 }}
+                    key={link.name}
+                  >
+                    <NavLink
+                      to={link.path}
+                      onClick={toggleMenu}
+                      className={({ isActive }) =>
+                        `block text-2xl font-light transition-colors hover:text-primary ${
+                          isActive ? "text-primary" : "text-muted-foreground"
+                        }`
+                      }
+                    >
+                      {link.name}
+                    </NavLink>
+                  </motion.div>
+                ))}
+                
+                <motion.div 
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="pt-6 border-t border-border flex flex-col gap-4"
+                >
+                  {isAuth ? (
+                    <NavLink onClick={toggleMenu} to="/account" className="w-full text-center px-6 py-4 text-base font-light bg-primary text-primary-foreground rounded-xl shadow-md">
+                      Go to Dashboard
+                    </NavLink>
+                  ) : (
+                    <>
+                      <NavLink onClick={toggleMenu} to="/login" className="w-full text-center px-6 py-4 text-base font-light bg-secondary text-secondary-foreground rounded-xl">
+                        Log in
+                      </NavLink>
+                      <NavLink onClick={toggleMenu} to="/register" className="w-full text-center px-6 py-4 text-base font-light bg-primary text-primary-foreground rounded-xl shadow-md">
+                        Let's Get Started
+                      </NavLink>
+                    </>
+                  )}
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </header>
   );
 }
 
 export default Header;
-
-
-
-
-
-
-
-
-
-// import React, { useState } from "react";
-// import { NavLink } from 'react-router-dom';
-// import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
-// import { motion } from 'framer-motion';
-
-// function Header({ isAuth }) {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleMenu = () => {
-//     setIsOpen(!isOpen);
-//     document.body.style.overflow = isOpen ? "auto" : "hidden"; // Prevent scrolling when menu is open
-//   };
-
-//   return (
-//     <div className="w-full flex justify-between items-center px-10 py-2 backdrop-blur-md bg-gradient-to-r from-black  to-black text-white">
-//       <div className="w-full flex justify-between items-center px-10 py-6">
-//         <div className="right flex">
-//           <h1 className="text-4xl font-semibold">
-//             Ease<span className="text-teal-600">Learn</span>
-//           </h1>
-//         </div>
-//         <div className="left hidden sm:block text-lg tracking-tighter">
-//           <div className="links flex gap-6">
-//             <NavLink to="/" className="text-xl font-light hover:underline hover:text-blue-200">Home</NavLink>
-//             <NavLink to="/courses" className="text-xl font-light hover:underline hover:text-blue-200">Courses</NavLink>
-//             <NavLink to="/about" className="text-xl font-light hover:underline hover:text-blue-200">About</NavLink>
-//             {isAuth ? 
-//               <NavLink to="/account" className="text-xl font-light hover:underline hover:text-blue-200">Account</NavLink> :
-//               <NavLink to="/login" className="text-xl font-light hover:underline hover:text-blue-200">Login</NavLink>
-//             }
-//           </div>
-//         </div>
-        
-//         {/* Mobile Navbar */}
-//         {isOpen ? (
-//           <>
-//             <RiCloseFill onClick={toggleMenu} className="text-3xl text-white cursor-pointer fixed top-6 right-6 z-50" />
-//             <motion.div
-//   initial={{ x: "-100%" }}
-//   animate={{ x: 0 }}
-//   exit={{ x: "-100%" }}
-//   transition={{ duration: 0.4, ease: "easeInOut" }}
-//   className="fixed top-0 left-0 h-screen w-full bg-black bg-opacity-90 z-[999] flex flex-col justify-center items-start p-8"
-// >
-
-
-//               <h2 className="text-3xl text-white font-semibold mb-8">Ease<span className="text-teal-600">Learn</span></h2>
-//               <NavLink to="/" className="text-2xl mb-6 text-white transition duration-200 hover:text-teal-900" onClick={toggleMenu}>Home</NavLink>
-//               <NavLink to="/courses" className="text-2xl mb-6 text-white transition duration-200 hover:teal-pink-900" onClick={toggleMenu}>Courses</NavLink>
-//               <NavLink to="/about" className="text-2xl mb-6 text-white transition duration-200 hover:text-teal-900" onClick={toggleMenu}>About</NavLink>
-//               {isAuth ? 
-//                 <NavLink to="/account" className="text-2xl mb-6 text-white transition duration-200 hover:text-teal-900" onClick={toggleMenu}>Account</NavLink> :
-//                 <NavLink to="/login" className="text-2xl mb-6 text-white transition duration-200 hover:text-teal-900" onClick={toggleMenu}>Login</NavLink>
-//               }
-//             </motion.div>
-//           </>
-//         ) : (
-//           <RiMenu3Fill onClick={toggleMenu} className="text-3xl text-white sm:hidden cursor-pointer z-50" />
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Header;
